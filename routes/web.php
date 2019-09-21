@@ -15,6 +15,8 @@ Route::get('/', function () {
     return view('auth/login');
 });
 
-Route::get('/test', function () {
-    return view('tasks/tasklist');
+Route::group(['middleware' => 'auth'], function () {
+    Route::get('/test', function () {
+        return view('tasks/tasklist');
+    });
 });
