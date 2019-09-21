@@ -12,11 +12,14 @@
 */
 
 Route::get('/', function () {
-    return view('auth/login');
+    return view('welcome');
 });
 
+Route::post('login', 'Auth\LoginController@login')->name('login.post');
+Route::get('logout', 'Auth\LoginController@logout')->name('logout.get');
+
 Route::group(['middleware' => 'auth'], function () {
-    Route::get('/test', function () {
+    Route::get('/tasklist', function () {
         return view('tasks/tasklist');
     });
 });

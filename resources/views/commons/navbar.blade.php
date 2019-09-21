@@ -10,12 +10,14 @@
             <div class="collapse navbar-collapse" id="nav-bar">
                 <ul class="navbar-nav mr-auto"></ul>
                 <ul class="navbar-nav">
-                    <li class="nav-item"><a href="#" class="nav-link">リマインドメール設定</a></li>
-                    <li class="nav-item"><a href="#" class="nav-link">タスク作成</a></li>
-                    <li class="nav-item"><a href="#" class="nav-link">タスク一覧</a></li>
-                    <li class="nav-item"><a href="#" class="nav-link">ログアウト</a></li>
-                    <li class="nav-item"><a href="#" class="nav-link">登録申請</a></li>
-                    <li class="nav-item"><a href="#" class="nav-link">ログイン</a></li>
+                    @if (Auth::check())
+                        <li class="nav-item"><a href="#" class="nav-link">リマインドメール設定</a></li>
+                        <li class="nav-item"><a href="#" class="nav-link">タスク作成</a></li>
+                        <li class="nav-item"><a href="/tasklist" class="nav-link">タスク一覧</a></li>
+                        <li class="nav-item">{!! link_to_route('logout.get', 'ログアウト', [], ['class' => 'nav-link']) !!}</li>
+                    @else
+                        <li class="nav-item"><a href="#" class="nav-link">登録申請</a></li>
+                    @endif
                 </ul>
             </div>
         </nav>

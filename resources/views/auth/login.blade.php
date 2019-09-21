@@ -1,31 +1,29 @@
-@extends('layouts.app')
-
 @section('content')
         <div class="text-center pb-3">
             <h4>ログイン</h4>
         </div>
 
-        <form>
+        {!! Form::open(['route' => 'login.post']) !!}
             <div class="row justify-content-center pb-2">
                 <div class="col-sm-2 text-right">
-                    <label>メールアドレス：</label>
+                    {!! Form::label('email', 'メールアドレス：') !!}
                 </div>
                 <div class="col-sm-5">
-                    <input type="email" name="email" class="form-control">
+                    {!! Form::email('email', old('email'), ['class' => 'form-control']) !!}
                 </div>
             </div>
             <div class="row justify-content-center pb-2">
                 <div class="col-sm-2 text-right">
-                    <label>パスワード：</label>
+                    {!! Form::label('password', 'パスワード：') !!}
                 </div>
                 <div class="col-sm-5">
-                    <input type="password" name="password" class="form-control">
+                    {!! Form::password('password', ['class' => 'form-control']) !!}
                 </div>
             </div>
             <div class="row justify-content-center pt-2">
                 <div class="col-sm-7">
-                    <submit class="btn btn-block btn-primary">ログイン</submit>
+                    {!! Form::submit('ログイン', ['class' => 'btn btn-primary btn-block']) !!}
                 </div>
             </div>
-        </form>
+        {!! Form::close() !!}
 @endsection
