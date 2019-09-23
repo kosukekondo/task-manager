@@ -16,48 +16,20 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr class="text-center" style="background-color:gray;">
-                        <td>連載</td>
-                        <td class="text-left"><a href="#" style="color:black;">媒体A　10月分　1/3</a></td>
-                        <td>完了</td>
-                        <td>2019/10/4</td>
-                    </tr>
-                    <tr class="text-center" style="background-color:gray;">
-                        <td>連載</td>
-                        <td class="text-left"><a href="#" style="color:black;">媒体A　10月分　2/3</a></td>
-                        <td>完了</td>
-                        <td>2019/10/11</td>
-                    </tr>
-                    <tr class="text-center">
-                        <td>登壇</td>
-                        <td class="text-left"><a href="#" style="color:black;">イベントD</a></td>
-                        <td>未完了</td>
-                        <td>2019/10/15</td>
-                    </tr>
-                    <tr class="text-center">
-                        <td>連載</td>
-                        <td class="text-left"><a href="#" style="color:black;">媒体A　10月分　3/3</a></td>
-                        <td>未完了</td>
-                        <td>2019/10/18</td>
-                    </tr>
-                    <tr class="text-center">
-                        <td>取材</td>
-                        <td class="text-left"><a href="#" style="color:black;">媒体E</a></td>
-                        <td>未完了</td>
-                        <td>2019/10/25</td>
-                    </tr>
-                    <tr class="text-center">
-                        <td>連載</td>
-                        <td class="text-left"><a href="#" style="color:black;">媒体B　10月分</a></td>
-                        <td>未完了</td>
-                        <td>2019/10/31</td>
-                    </tr>
-                    <tr class="text-center">
-                        <td>単発</td>
-                        <td class="text-left"><a href="#" style="color:black;">媒体C</a></td>
-                        <td>未完了</td>
-                        <td>2019/10/31</td>
-                    </tr>
+                    @if (count($tasks) > 0)
+                        @foreach ($tasks as $task)
+                            <tr class="text-center">
+                                <td>{{ $task->type->name }}</td>
+                                <td class="text-left"><a href="#" style="color:black;">{{ $task->name }}</a></td>
+                                <td>{{ $task->status->name }}</td>
+                                <td>{{ $task->period }}</td>
+                            </tr>
+                        @endforeach
+                    @else
+                        <tr class="text-center">
+                            <td colspan="4" class="pt-4"><h3>条件に該当するデータなし</h3></td>
+                        </tr>
+                    @endif
                 </tbody>
             </table>
 
