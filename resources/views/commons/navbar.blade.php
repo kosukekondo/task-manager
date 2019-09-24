@@ -1,7 +1,7 @@
 <header>
     <nav class="navbar navbar-expand-sm navbar-dark bg-dark">
         <div class="container">
-            <a class="navbar-brand" href="tasklist">Task Manager</a>
+            <a class="navbar-brand" href="/tasks">Task Manager</a>
              
             <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#nav-bar">
                 <span class="navbar-toggler-icon"></span>
@@ -12,12 +12,12 @@
                 <ul class="navbar-nav">
                     @if (Auth::check())
                         <li class="nav-item"><a href="#" class="nav-link">リマインドメール設定</a></li>
-                        <li class="nav-item"><a href="#" class="nav-link">タスク作成</a></li>
+                        <li class="nav-item">{!! link_to_route('tasks.create', 'タスク作成', [], ['class' => 'nav-link']) !!}</li>
                         <li class="nav-item">{!! link_to_route('tasks.index', 'タスク一覧', [], ['class' => 'nav-link']) !!}</li>
                         <li class="nav-item">{!! link_to_route('logout.get', 'ログアウト', [], ['class' => 'nav-link']) !!}</li>
                     @else
                         <li class="nav-item"><a href="#" class="nav-link">登録申請</a></li>
-                        <li class="nav-item"><a href="/" class="nav-link">ログイン</a></li>
+                        <li class="nav-item"><a href="/" class="nav-link"></a></li>
                     @endif
                 </ul>
             </div>

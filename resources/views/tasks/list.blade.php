@@ -18,12 +18,16 @@
                 <tbody>
                     @if (count($tasks) > 0)
                         @foreach ($tasks as $task)
-                            <tr class="text-center">
-                                <td>{{ $task->type->name }}</td>
-                                <td class="text-left"><a href="#" style="color:black;">{{ $task->name }}</a></td>
-                                <td>{{ $task->status->name }}</td>
-                                <td>{{ $task->period }}</td>
-                            </tr>
+                            @if ($task->status_id == 2)
+                                <tr class="text-center" style="background-color:gray;">
+                            @else
+                                <tr class="text-center">
+                            @endif
+                                    <td>{{ $task->type->name }}</td>
+                                    <td class="text-left">{!! link_to_route('tasks.edit', $task->name, ['id' => $task->id], ['style' => 'color:black;']) !!}</td>
+                                    <td>{{ $task->status->name }}</td>
+                                    <td>{{ $task->period }}</td>
+                                </tr>
                         @endforeach
                     @else
                         <tr class="text-center">

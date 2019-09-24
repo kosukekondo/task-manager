@@ -11,9 +11,13 @@
 
         @include('commons.navbar')
         
-        @include('commons.error_messages')
-            
         <div class="pt-3 pb-3" style="background-color:#E9ECEF;">
+            <div class="container">
+                @include('commons.error_messages')
+            </div>
+        </div>
+            
+        <div class="pb-3" style="background-color:#E9ECEF;">
             <div class="container">
                 @yield('content')
             </div>

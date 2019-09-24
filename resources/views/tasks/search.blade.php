@@ -25,7 +25,7 @@
 
     <div class="row justify-content-center mb-2">
         <div class="col-sm-2 text-right font-weight-bold">
-            <label class="mb-0">納品日(開始/終了)    ：</label>
+            <label class="mb-0">納品日(開始/終了)：</label>
         </div>
         <div class="col-sm-3">
             <input type="date" class="form-control">
