@@ -25,4 +25,5 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('tasks/search', 'TasksController@search')->name('tasks.search');
     Route::get('tasks/search/{id}', 'TasksController@specifiedterm')->name('tasks.specifiedterm');
 
+    Route::resource('remainders', 'RemaindersController');
 });

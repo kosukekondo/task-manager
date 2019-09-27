@@ -49,16 +49,16 @@
     <div class="row justify-content-center mb-2">
         <div class="col-sm-2 my-1"></div>
         <div class="col-sm-1 my-1">
-            {!! link_to_route('tasks.specifiedterm', '前月', ['id' => 'lastmonth'], ['class' => 'btn btn-block btn-info btn-sm ']) !!}
+            {!! link_to_route('tasks.specifiedterm', '前月', ['id' => 'lastmonth'], ['class' => 'btn btn-block btn-outline-info btn-sm ']) !!}
         </div>
         <div class="col-sm-1 my-1">
-            {!! link_to_route('tasks.specifiedterm', '今月', ['id' => 'thismonth'], ['class' => 'btn btn-block btn-info btn-sm']) !!}
+            {!! link_to_route('tasks.specifiedterm', '今月', ['id' => 'thismonth'], ['class' => 'btn btn-block btn-outline-info btn-sm']) !!}
         </div>
         <div class="col-sm-1 my-1">
-            {!! link_to_route('tasks.specifiedterm', '来月', ['id' => 'nextmonth'], ['class' => 'btn btn-block btn-info btn-sm']) !!}
+            {!! link_to_route('tasks.specifiedterm', '来月', ['id' => 'nextmonth'], ['class' => 'btn btn-block btn-outline-info btn-sm']) !!}
         </div>
         <div class="col-sm-2 my-1">
-            {!! link_to_route('tasks.specifiedterm', '本日～7日後', ['id' => '7days'], ['class' => 'btn btn-block btn-info btn-sm']) !!}
+            {!! link_to_route('tasks.specifiedterm', '本日～7日後', ['id' => '7days'], ['class' => 'btn btn-block btn-outline-info btn-sm']) !!}
         </div>
         <div class="col-sm-1 my-1">
         </div>

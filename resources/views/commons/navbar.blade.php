@@ -11,7 +11,7 @@
                 <ul class="navbar-nav mr-auto"></ul>
                 <ul class="navbar-nav">
                     @if (Auth::check())
-                        <li class="nav-item"><a href="#" class="nav-link">リマインドメール設定</a></li>
+                        <li class="nav-item">{!! link_to_route('remainders.edit', 'リマインドメール設定', 1, ['class' => 'nav-link']) !!}</li>
                         <li class="nav-item">{!! link_to_route('tasks.create', 'タスク作成', [], ['class' => 'nav-link']) !!}</li>
                         <li class="nav-item">{!! link_to_route('tasks.index', 'タスク一覧', [], ['class' => 'nav-link']) !!}</li>
                         <li class="nav-item">{!! link_to_route('logout.get', 'ログアウト', [], ['class' => 'nav-link']) !!}</li>
