@@ -17,11 +17,21 @@ class TasksController extends Controller
      */
     public function index()
     {
-        // $tasks = Task::all();
-        $tasks = Task::orderBy('period', 'asc')->get();
-        
+        $status = 0;
+        $period_start = new \Carbon\Carbon('first day of this month');
+        $period_end = new \Carbon\Carbon('last day of this month'); 
+        $keyword = '';
+
+        $tasks = Task::whereBetween('period', [$period_start, $period_end])
+                    ->orderBy('period', 'asc')
+                    ->get();
+
         return view('tasks.index', [
             'tasks' => $tasks,
+            'status' => $status,
+            'period_start' => $period_start,
+            'period_end' => $period_end,
+            'keyword' => $keyword,
         ]);
     }
 
@@ -152,5 +162,74 @@ class TasksController extends Controller
         $task->save();
 
         return redirect('tasks');
+    }
+
+    public function search(Request $request)
+    {
+        $this->validate($request, [
+            'status' => 'required',
+            'period_start' => 'required',
+            'period_end' => 'required',
+        ]);
+        
+        $status = $request->input('status');
+        $period_start = $request->input('period_start');
+        $period_end = $request->input('period_end');
+        $keyword = $request->input('keyword');
+
+        $tasks = Task::whereBetween('period', [$period_start, $period_end])
+            ->orderBy('period', 'asc');
+        
+        if ($status > 0) {
+            $tasks = $tasks->where('status_id', $status);
+        }
+        
+        if ($keyword) {
+            $tasks = $tasks->where('name', 'like', "%{$keyword}%");
+        }
+
+        $tasks = $tasks->get();
+
+
+        return view('tasks.index', [
+            'tasks' => $tasks,
+            'status' => $status,
+            'period_start' => $period_start,
+            'period_end' => $period_end,
+            'keyword' => $keyword,
+        ]);
+    }
+
+    public function specifiedterm($id)
+    {
+        $status = 0;
+
+        if ($id == 'lastmonth') {
+            $period_start = new \Carbon\Carbon('first day of last month');
+            $period_end = new \Carbon\Carbon('last day of last month'); 
+        } elseif ($id == 'nextmonth') {
+            $period_start = new \Carbon\Carbon('first day of next month');
+            $period_end = new \Carbon\Carbon('last day of next month'); 
+        } elseif ($id == '7days') {
+            $period_start = new \Carbon\Carbon('today');
+            $period_end = new \Carbon\Carbon('7 day');
+        } else {
+            $period_start = new \Carbon\Carbon('first day of this month');
+            $period_end = new \Carbon\Carbon('last day of this month'); 
+        }
+
+        $keyword = '';
+
+        $tasks = Task::whereBetween('period', [$period_start, $period_end])
+                    ->orderBy('period', 'asc')
+                    ->get();
+
+        return view('tasks.index', [
+            'tasks' => $tasks,
+            'status' => $status,
+            'period_start' => $period_start,
+            'period_end' => $period_end,
+            'keyword' => $keyword,
+        ]);
     }
 }

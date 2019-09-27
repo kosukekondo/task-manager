@@ -31,7 +31,7 @@
                         @endforeach
                     @else
                         <tr class="text-center">
-                            <td colspan="4" class="pt-4"><h3>条件に該当するデータなし</h3></td>
+                            <td colspan="4" class="pt-4"><h4>条件に該当するデータは存在しません。</h4></td>
                         </tr>
                     @endif
                 </tbody>

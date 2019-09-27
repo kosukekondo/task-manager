@@ -16,7 +16,6 @@
                         <li class="nav-item">{!! link_to_route('tasks.index', 'タスク一覧', [], ['class' => 'nav-link']) !!}</li>
                         <li class="nav-item">{!! link_to_route('logout.get', 'ログアウト', [], ['class' => 'nav-link']) !!}</li>
                     @else
-                        <li class="nav-item"><a href="#" class="nav-link">登録申請</a></li>
                         <li class="nav-item"><a href="/" class="nav-link"></a></li>
                     @endif
                 </ul>
