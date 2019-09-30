@@ -18,8 +18,8 @@ class TasksController extends Controller
     public function index()
     {
         $status = 0;
-        $period_start = new \Carbon\Carbon('first day of this month');
-        $period_end = new \Carbon\Carbon('last day of this month'); 
+        $period_start = \Carbon\Carbon::now()->firstOfMonth();
+        $period_end = \Carbon\Carbon::now()->endOfMonth(); 
         $keyword = '';
 
         $tasks = Task::whereBetween('period', [$period_start, $period_end])
@@ -214,9 +214,15 @@ class TasksController extends Controller
             $period_start = new \Carbon\Carbon('today');
             $period_end = new \Carbon\Carbon('7 day');
         } else {
-            $period_start = new \Carbon\Carbon('first day of this month');
-            $period_end = new \Carbon\Carbon('last day of this month'); 
+            $period_start = \Carbon\Carbon::now()->firstOfMonth();
+            $period_end = \Carbon\Carbon::now()->endOfMonth(); 
         }
+        $period_start->hour = 0;
+        $period_start->minute = 0;
+        $period_start->second = 0;
+        $period_end->hour = 0;
+        $period_end->minute = 0;
+        $period_end->second = 0;
 
         $keyword = '';
 
