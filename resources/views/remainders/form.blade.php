@@ -16,7 +16,7 @@
         <div class="col-sm-3"></div>
     </div>
 
-    <div class="row justify-content-center mb-2">
+    <div class="row justify-content-center mb-3">
         <div class="col-sm-2 text-right font-weight-bold">
             {!! Form::label('term', 'リマインド日：', ['class' => 'mb-0']) !!}
         </div>
@@ -36,3 +36,10 @@
         </div>
     </div>
 {!! Form::close() !!}
+
+<div class="row justify-content-center mb-3">
+    <div class="col-sm-8 text-right font-weight-bold">
+        {!! link_to_route('remainders.send', 'テストメール送信', [], ['class' => 'btn btn-block btn-warning']) !!}
+    </div>
+</div>
+

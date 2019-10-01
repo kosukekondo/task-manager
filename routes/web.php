@@ -24,6 +24,6 @@ Route::group(['middleware' => 'auth'], function () {
     Route::put('tasks/{id}/duplicate', 'TasksController@duplicate')->name('tasks.duplicate');
     Route::post('tasks/search', 'TasksController@search')->name('tasks.search');
     Route::get('tasks/search/{id}', 'TasksController@specifiedterm')->name('tasks.specifiedterm');
-
+    Route::get('remainders/send', 'RemaindersController@send')->name('remainders.send');
     Route::resource('remainders', 'RemaindersController');
 });

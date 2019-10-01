@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Remainder;
 
+use Illuminate\Support\Facades\Mail;
+use App\Mail\SendRemaind;
+
 class RemaindersController extends Controller
 {
     /**
@@ -96,4 +99,11 @@ class RemaindersController extends Controller
     {
         //
     }
+
+    public function send()
+    {
+        Mail::to('break.cardinal@gmail.com')->send(new SendRemaind());
+
+        return redirect('remainders/1/edit');
+   }
 }
