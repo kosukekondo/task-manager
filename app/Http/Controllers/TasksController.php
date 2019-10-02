@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Task;
 use App\Type;
 use App\Status;
+use App\Company;
 
 class TasksController extends Controller
 {
@@ -45,11 +46,13 @@ class TasksController extends Controller
         $task = new Task();
         $type = new Type();
         $status = new Status();
+        $company = new Company();
 
         return view('tasks.create', [
             'task' => $task,
             'type' => $type,
             'status' => $status,
+            'company' => $company,
             ]);
     }
 
@@ -67,6 +70,7 @@ class TasksController extends Controller
             'status_id' => 'required',
             'period' => 'required',
             'note' => 'max:191',
+            'company_id' => 'required',
             ]);
         
         $task = new Task();
@@ -76,6 +80,8 @@ class TasksController extends Controller
         $task->period = $request->period;
         $task->char_counts = $request->char_counts;
         $task->note = $request->note;
+        $task->company_id = $request->company_id;
+        $task->price = $request->price;
         $task->save();
         
         return redirect('tasks');
@@ -135,6 +141,8 @@ class TasksController extends Controller
         $task->period = $request->period;
         $task->char_counts = $request->char_counts;
         $task->note = $request->note;
+        $task->company_id = $request->company_id;
+        $task->price = $request->price;
         $task->save();
         
         return redirect('tasks');
@@ -217,12 +225,8 @@ class TasksController extends Controller
             $period_start = \Carbon\Carbon::now()->firstOfMonth();
             $period_end = \Carbon\Carbon::now()->endOfMonth(); 
         }
-        $period_start->hour = 0;
-        $period_start->minute = 0;
-        $period_start->second = 0;
-        $period_end->hour = 0;
-        $period_end->minute = 0;
-        $period_end->second = 0;
+        $period_start = $period_start->toDateString();
+        $period_end = $period_end->toDateString(); 
 
         $keyword = '';
 
