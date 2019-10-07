@@ -1,58 +1,76 @@
-<p align="center"><img src="https://laravel.com/assets/img/components/logo-laravel.svg"></p>
+# アプリケーションの概要
+- 私がマネージャーを勤めるWebライター向けに開発したタスクマネジメントアプリです。
+- 月毎のタスクの納期や執筆状況確認、請求ステータス確認、請求書発行などの一連の業務の抜け漏れを防ぎます。
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/d/total.svg" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/v/stable.svg" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/license.svg" alt="License"></a>
-</p>
 
-## About Laravel
+# アプリケーション作成の背景
+- 作家が月に抱える執筆の本数が30前後と非常に多く、それらを全て人力＋Excelで管理しており、度々抜け漏れが発生する問題がありました。
+- 改善の為にTrelloやBacklogなどの既存のタスクマネジメントツールを導入するも、作家の好みに合わず定着しませんでした。
+- そこで、作家の好みに合うよう機能や画面などを定義し、作成しました。
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel attempts to take the pain out of development by easing common tasks used in the majority of web projects, such as:
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+# デモシステムへのアクセス
+- AWS上にデモ環境を用意しており、以下の情報でアクセス可能です。
+- URL：http://52.206.180.61/
 
-Laravel is accessible, yet powerful, providing tools needed for large, robust applications.
+```
+USER：test@test.com
+PASS：test
+```
 
-## Learning Laravel
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of any modern web application framework, making it a breeze to get started learning the framework.
+# デモシステムの環境情報
+- AWS
+    - EC2（Amazon Linux2）
+    - RDS
+- PHP7.2
+- MySQL5.7
+- Apache2.4
+- Laravel5.5
+- Git/GitHub
 
-If you're not in the mood to read, [Laracasts](https://laracasts.com) contains over 1100 video tutorials on a range of topics including Laravel, modern PHP, unit testing, JavaScript, and more. Boost the skill level of yourself and your entire team by digging into our comprehensive video library.
 
-## Laravel Sponsors
+# 機能と使用技術
+- 認証関連
+    - ログイン/ログアウト機能
+    - 非認証アクセス時のリダイレクト機能
 
-We would like to extend our thanks to the following sponsors for helping fund on-going Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell):
+- タスクアイテム関連
+    - タスク登録・編集・削除・複製機能
+    - タスク一覧機能
+    - タスク検索機能
+    - 関連データとの連携機能
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[British Software Development](https://www.britishsoftware.co)**
-- [Fragrantica](https://www.fragrantica.com)
-- [SOFTonSOFA](https://softonsofa.com/)
-- [User10](https://user10.com)
-- [Soumettre.fr](https://soumettre.fr/)
-- [CodeBrisk](https://codebrisk.com)
-- [1Forge](https://1forge.com)
-- [TECPRESSO](https://tecpresso.co.jp/)
-- [Pulse Storm](http://www.pulsestorm.net/)
-- [Runtime Converter](http://runtimeconverter.com/)
-- [WebL'Agence](https://weblagence.com/)
+- 企業アイテム関連
+    - 企業登録・編集・削除機能
+    - 企業一覧機能
 
-## Contributing
+- 担当者アイテム関連
+    - 担当者登録・編集・削除機能
+    - 担当者一覧機能
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+- 売上関連
+    - 売上一覧機能
+    - 売上検索機能
 
-## Security Vulnerabilities
+- 請求関連
+    - 請求一覧機能
+    - 請求検索機能
+    - 請求詳細表示機能
+    - 請求書（PDF）発行機能（laravel-dompdf＆日本語対応フォントで実装）
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+- リマインドメール関連
+    - 送信設定確認機能
+    - テストメール送信機能
+    - リマインドメール送信機能（artisanコマンド＆cronで実装）
 
-## License
+- その他ビュー関連
+    - バリデーションとエラー表示
+    - レスポンスシブデザイン（グリッド）
+    - リンク・フォーム生成（Laravel Corrective）
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+
+# 未対応の課題
+- 各種アクション実行時に結果メッセージ表示機能が実装されていない
+- 企業IDと担当者IDの整合性が取れなくなる場合がある
+- 企業IDと担当者IDの整合性が取れなくなった場合、エラー画面になってしまう場合がある
