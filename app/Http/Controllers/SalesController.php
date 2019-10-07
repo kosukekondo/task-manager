@@ -15,26 +15,15 @@ class SalesController extends Controller
      */
     public function index()
     {
-        $period_start = \Carbon\Carbon::now()->firstOfMonth();
-        $period_end = \Carbon\Carbon::now()->endOfMonth();
+        list($period_start, $period_end) = Task::getThisMonth();
+
+        $scope = Task::getScope($period_end);
+
+        $tasks = Task::getTasks4salles($period_start, $period_end);
+
+        $tax_rate = Task::getTaxRate($period_start);
         
-        $scope = \Carbon\Carbon::now()->firstOfMonth()->format('Y年m月');
-
-        $tasks = Task::whereBetween('period', [$period_start, $period_end])
-                    ->orderBy('company_id', 'asc')
-                    ->get();
-
-        $today = \Carbon\Carbon::now()->today();
-        $border = \Carbon\Carbon::createMidnightDate(2019, 10, 1);
-        if ($today >= $border) {
-            $tax_rate = 0.1;
-        } else {
-            $tax_rate = 0.08;
-        }
-
-        $total = $tasks->sum('price');
-        $tax = floor($total * $tax_rate);
-        $grand_total = $total - $tax;
+        list($total, $tax, $grand_total) = Task::getSallesResult($tasks, $tax_rate);
 
         return view('sales.index', [
             'tasks' => $tasks,
@@ -119,29 +108,15 @@ class SalesController extends Controller
             'period_month' => 'required',
         ]);
         
-        $period_year = $request->input('period_year');
-        $period_month = $request->input('period_month');
-
-        $period_start = \Carbon\Carbon::createMidnightDate($period_year, $period_month, 1);
-        $period_end = \Carbon\Carbon::createMidnightDate($period_year, $period_month, 1)->endOfMonth();
-
-        $scope = $period_end->format('Y年m月');
-
-        $tasks = Task::whereBetween('period', [$period_start, $period_end])
-                    ->orderBy('company_id', 'asc')
-                    ->get();
+        list($period_start, $period_end) = Task::get1month($request->input('period_year'), $request->input('period_month'));
         
-        $border = \Carbon\Carbon::createMidnightDate(2019, 10, 1);
+        $scope = Task::getScope($period_end);
 
-        if ($period_end >= $border) {
-            $tax_rate = 0.1;
-        } else {
-            $tax_rate = 0.08;
-        }
+        $tasks = Task::getTasks4salles($period_start, $period_end);
 
-        $total = $tasks->sum('price');
-        $tax = floor($total * $tax_rate);
-        $grand_total = $total - $tax;
+        $tax_rate = Task::getTaxRate($period_start);
+
+        list($total, $tax, $grand_total) = Task::getSallesResult($tasks, $tax_rate);
 
         return view('sales.index', [
             'tasks' => $tasks,
@@ -155,36 +130,13 @@ class SalesController extends Controller
 
     public function specifiedterm($id)
     {
-        if ($id == 'lastmonth') {
-            $period_start = new \Carbon\Carbon('first day of last month');
-            $period_end = new \Carbon\Carbon('last day of last month'); 
-        } elseif ($id == 'nextmonth') {
-            $period_start = new \Carbon\Carbon('first day of next month');
-            $period_end = new \Carbon\Carbon('last day of next month'); 
-        } else {
-            $period_start = \Carbon\Carbon::now()->firstOfMonth();
-            $period_end = \Carbon\Carbon::now()->endOfMonth(); 
-        }
-        $scope = $period_end->format('Y年m月');
+        list($period_start, $period_end, $scope) = Task::calculateTerm($id);
+        
+        $tasks = Task::getTasks4salles($period_start, $period_end);
 
-        $period_start = $period_start->toDateString();
-        $period_end = $period_end->toDateString(); 
+        $tax_rate = Task::getTaxRate($period_start);
 
-        $tasks = Task::whereBetween('period', [$period_start, $period_end])
-                    ->orderBy('period', 'asc')
-                    ->get();
-
-        $border = \Carbon\Carbon::createMidnightDate(2019, 10, 1);
-
-        if ($period_end >= $border) {
-            $tax_rate = 0.1;
-        } else {
-            $tax_rate = 0.08;
-        }
-
-        $total = $tasks->sum('price');
-        $tax = floor($total * $tax_rate);
-        $grand_total = $total - $tax;
+        list($total, $tax, $grand_total) = Task::getSallesResult($tasks, $tax_rate);
 
         return view('sales.index', [
             'tasks' => $tasks,
