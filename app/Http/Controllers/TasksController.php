@@ -171,8 +171,10 @@ class TasksController extends Controller
     public function duplicate($id){
         $task = Task::find($id)->replicate();
         $task->name = $task->name . ' #コピー';
-        unset($task->created_at);
+        $task->billing_status_id = 1;
+        unset($task->billing_id);
         unset($task->updated_at);
+        unset($task->created_at);
         $task->save();
 
         return redirect('tasks');
