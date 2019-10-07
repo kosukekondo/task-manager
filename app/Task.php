@@ -69,9 +69,9 @@ class Task extends Model
         }
         $scope = Task::getScope($period_end);
 
-        $period_start = $period_start->toDateString();
-        $period_end = $period_end->toDateString(); 
-        
+        $period_start->setTime(0, 0, 0);
+        $period_end->setTime(0, 0, 0);
+
         return array($period_start, $period_end, $scope);
     }
 
