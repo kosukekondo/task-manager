@@ -55,7 +55,7 @@
         <div class="col-sm-3"></div>
     </div>
 
-    <div class="row justify-content-center mb-3">
+    <div class="row justify-content-center mb-2">
         <div class="col-sm-2 text-right font-weight-bold">
             {!! Form::label('note', 'メモ：', ['class' => 'mb-0']) !!}
         </div>
@@ -64,9 +64,9 @@
         </div>
     </div>
 
-    <div class="row justify-content-center mb-3">
+    <div class="row justify-content-center mb-2">
         <div class="col-sm-2 text-right font-weight-bold">
-            {!! Form::label('company_id', '企業名：', ['class' => 'mb-0']) !!}
+            {!! Form::label('company_id', '企業：', ['class' => 'mb-0']) !!}
         </div>
         <div class="col-sm-3">
             {!! Form::select('company_id', $task->company->get_company_list() , old('company_id'), ['class' => 'form-control']) !!}
@@ -76,13 +76,46 @@
 
     <div class="row justify-content-center mb-2">
         <div class="col-sm-2 text-right font-weight-bold">
-            {!! Form::label('price', '金額：', ['class' => 'mb-0']) !!}
+            {!! Form::label('staff_id', '担当者：', ['class' => 'mb-0']) !!}
+        </div>
+        <div class="col-sm-2">
+            <a>{{ $task->staff->name }}</a>
+        </div>
+        <div class="col-sm-2">
+            {!! link_to_route('tasks.staffedit', '担当者の変更', $task->id, ['class' => 'btn btn-block btn-info']) !!}
+        </div>
+        <div class="col-sm-2"></div>
+    </div>
+
+    <div class="row justify-content-center mb-2">
+        <div class="col-sm-2 text-right font-weight-bold">
+            {!! Form::label('price', '報酬：', ['class' => 'mb-0']) !!}
         </div>
         <div class="col-sm-3">
             {!! Form::number('price', $task->price, ['class'=>'form-control']) !!}
         </div>
         <div class="col-sm-3"></div>
     </div>
+
+    <div class="row justify-content-center mb-2">
+        <div class="col-sm-2 text-right font-weight-bold">
+            {!! Form::label('billing_status_id', '請求ステータス：', ['class' => 'mb-0']) !!}
+        </div>
+        <div class="col-sm-3">
+            {!! Form::select('billing_status_id', $billing_status->get_billing_status_list() , $task->billing_status_id, ['class' => 'form-control']) !!}
+        </div>
+        <div class="col-sm-3"></div>
+    </div>
+
+    <div class="row justify-content-center mb-3">
+        <div class="col-sm-2 text-right font-weight-bold">請求ID：</div>
+        <div class="col-sm-3">
+            {{ $task->billing_id ? "$task->billing_id" : 'なし' }}
+        </div>
+        <div class="col-sm-3"></div>
+    </div>
+
+
 
     <div class="row justify-content-center mb-3">
         <div class="col-sm-8 text-right font-weight-bold">

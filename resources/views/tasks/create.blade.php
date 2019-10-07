@@ -64,7 +64,7 @@
         </div>
     </div>
 
-    <div class="row justify-content-center mb-3">
+    <div class="row justify-content-center mb-2">
         <div class="col-sm-2 text-right font-weight-bold">
             {!! Form::label('company_id', '企業名：', ['class' => 'mb-0']) !!}
         </div>
@@ -74,9 +74,9 @@
         <div class="col-sm-3"></div>
     </div>
 
-    <div class="row justify-content-center mb-2">
+    <div class="row justify-content-center mb-3">
         <div class="col-sm-2 text-right font-weight-bold">
-            {!! Form::label('price', '金額：', ['class' => 'mb-0']) !!}
+            {!! Form::label('price', '報酬：', ['class' => 'mb-0']) !!}
         </div>
         <div class="col-sm-3">
             {!! Form::number('price', old('char_counts'), ['class'=>'form-control']) !!}

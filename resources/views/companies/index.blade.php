@@ -2,12 +2,12 @@
 
 @section('content')
     <div class="text-center mb-3">
-        <h4>企業情報一覧</h4>
+        <h4>企業の一覧</h4>
     </div>
     
     <div class="mb-3">
         <div class="row justify-content-center">
-            <div class="col-sm-9 p-2 rounded" style="background-color:white;">
+            <div class="col-sm-7 p-2 rounded" style="background-color:white;">
                 
                 <table class="table">
                     <thead>

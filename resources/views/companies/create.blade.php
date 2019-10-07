@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="text-center mb-3">
-    <h4>企業情報の作成</h4>
+    <h4>企業の新規作成</h4>
 </div>
 
 {!! Form::model($company, ['route' => 'companies.store']) !!}

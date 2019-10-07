@@ -8,6 +8,8 @@ use App\Task;
 use App\Type;
 use App\Status;
 use App\Company;
+use App\Staff;
+use App\BillingStatus;
 
 class TasksController extends Controller
 {
@@ -19,13 +21,11 @@ class TasksController extends Controller
     public function index()
     {
         $status = 0;
-        $period_start = \Carbon\Carbon::now()->firstOfMonth();
-        $period_end = \Carbon\Carbon::now()->endOfMonth(); 
         $keyword = '';
-
-        $tasks = Task::whereBetween('period', [$period_start, $period_end])
-                    ->orderBy('period', 'asc')
-                    ->get();
+        
+        list($period_start, $period_end) = Task::getThisMonth();
+        
+        $tasks = Task::getTasks($period_start, $period_end);
 
         return view('tasks.index', [
             'tasks' => $tasks,
@@ -81,7 +81,9 @@ class TasksController extends Controller
         $task->char_counts = $request->char_counts;
         $task->note = $request->note;
         $task->company_id = $request->company_id;
+        $task->staff_id = 1;
         $task->price = $request->price;
+        $task->billing_status_id = 1;
         $task->save();
         
         return redirect('tasks');
@@ -111,9 +113,11 @@ class TasksController extends Controller
     public function edit($id)
     {
         $task = Task::find($id);
+        $billing_status = new BillingStatus();
 
         return view('tasks.edit', [
             'task' => $task,
+            'billing_status' => $billing_status,
             ]);
     }
 
@@ -143,6 +147,7 @@ class TasksController extends Controller
         $task->note = $request->note;
         $task->company_id = $request->company_id;
         $task->price = $request->price;
+        $task->billing_status_id = $request->billing_status_id;
         $task->save();
         
         return redirect('tasks');
@@ -162,6 +167,7 @@ class TasksController extends Controller
         return redirect('tasks');
     }
 
+
     public function duplicate($id){
         $task = Task::find($id)->replicate();
         $task->name = $task->name . ' #コピー';
@@ -171,6 +177,7 @@ class TasksController extends Controller
 
         return redirect('tasks');
     }
+
 
     public function search(Request $request)
     {
@@ -198,7 +205,6 @@ class TasksController extends Controller
 
         $tasks = $tasks->get();
 
-
         return view('tasks.index', [
             'tasks' => $tasks,
             'status' => $status,
@@ -211,28 +217,11 @@ class TasksController extends Controller
     public function specifiedterm($id)
     {
         $status = 0;
-
-        if ($id == 'lastmonth') {
-            $period_start = new \Carbon\Carbon('first day of last month');
-            $period_end = new \Carbon\Carbon('last day of last month'); 
-        } elseif ($id == 'nextmonth') {
-            $period_start = new \Carbon\Carbon('first day of next month');
-            $period_end = new \Carbon\Carbon('last day of next month'); 
-        } elseif ($id == '7days') {
-            $period_start = new \Carbon\Carbon('today');
-            $period_end = new \Carbon\Carbon('7 day');
-        } else {
-            $period_start = \Carbon\Carbon::now()->firstOfMonth();
-            $period_end = \Carbon\Carbon::now()->endOfMonth(); 
-        }
-        $period_start = $period_start->toDateString();
-        $period_end = $period_end->toDateString(); 
-
         $keyword = '';
+        
+        list($period_start, $period_end, $scope) = Task::calculateTerm($id);
 
-        $tasks = Task::whereBetween('period', [$period_start, $period_end])
-                    ->orderBy('period', 'asc')
-                    ->get();
+        $tasks = Task::getTasks($period_start, $period_end);
 
         return view('tasks.index', [
             'tasks' => $tasks,
@@ -240,6 +229,34 @@ class TasksController extends Controller
             'period_start' => $period_start,
             'period_end' => $period_end,
             'keyword' => $keyword,
+        ]);
+    }
+    
+
+    public function staffedit($id)
+    {
+        $task = Task::find($id);
+
+        return view('tasks.staffedit', [
+            'task' => $task,
+            ]);
+    }
+
+        public function staffupdate(Request $request, $id)
+    {
+        $this->validate($request, [
+            'staff_id' => 'required',
+        ]);
+        
+        $task = Task::find($id);
+        $task->staff_id = $request->staff_id;
+        $task->save();
+
+        $billing_status = new BillingStatus();
+        
+        return view('tasks.edit', [
+            'task' => $task,
+            'billing_status' => $billing_status,
         ]);
     }
 }
